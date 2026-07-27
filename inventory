@@ -1,0 +1,13 @@
+[web]
+web1 ansible_host=34.228.187.211 ansible_ssh_private_key_file=/home/geraldpadre/.ssh/gerald-ansible ansible_user=ec2-user
+
+[db]
+db1 ansible_host=13.217.16.150 ansible_ssh_private_key_file=/home/geraldpadre/.ssh/gerald-ansible ansible_user=ec2-user
+
+[local]
+localnode ansible_connection=local
+
+[datacenter:children]
+web
+db
+
