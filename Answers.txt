@@ -1,0 +1,127 @@
+1. What is the name of your Kubernetes node?
+- Minikube
+
+2. What Kubernetes version is running?
+- v1.35.1
+
+3. Is the node in a Ready state?
+- Yes, the status says Ready
+
+4. What is the purpose of Minikube?
+- It is a tool that runs a lightweight, single-node Kubernetes cluster locally (in a VM or container) 
+  so you can develop and test against a real Kubernetes API without needing a full multi-node production cluster.
+
+Part 2
+1. What image is the Pod using?
+- nginx:latest
+
+2. What is the status of the Pod?
+- Running
+
+3. What node is the Pod running on?
+- minikube/192.168.49.2
+
+4. What is the Pod's IP address?
+- 10.244.0.4
+
+5. How many containers are inside the Pod?
+- 1
+
+6. What is the purpose of the kubectl describe command?
+- it gives a human-readable, detailed view of an object's spec, current status, and recent events especially useful for troubleshooting 
+  since it shows the event log (pulls, scheduling, restarts, errors) that kubectl get doesn't show
+
+Part 3
+
+1. How many Pods were created?
+- 3
+
+2. What is the name of the Deployment?
+- web-app
+
+3. What image are the Pods using?
+- nginx:latest
+
+4. What is the difference between the Pod you created earlier and the Pods created by the
+Deployment?
+The standalone nginx-pod is unmanaged so if it dies, nothing recreates it. 
+The Deployment-managed pods are owned by a ReplicaSet, which continuously reconciles the actual pod count against the desired replicas: 3, 
+recreating any pod that's deleted or crashes
+
+5. Why would we use a Deployment instead of creating individual Pods manually?
+- For declarative desired-state management: self-healing, easy scaling, rolling updates/rollbacks, and no manual tracking of individual pod names
+
+Part 4
+
+1. What ReplicaSet was created?
+- web-app-59f86b59ff
+
+2. How many Pods does the ReplicaSet manage?
+- 3
+
+3. Which Kubernetes object maintains the desired number of Pods?
+- ReplicaSet
+
+4. What happens if one of the Pods is deleted?
+- The ReplicaSet notices the actual count (2) doesn't match desired (3) and immediately creates a replacement pod
+
+Part 5
+1. How many Pods existed before scaling?
+- 3
+
+2. How many existed after scaling to 5?
+- 5
+
+3. How many existed after scaling down to 2?
+- 2
+
+4. What command did you use to scale the Deployment?
+- kubectl scale deployment web-app --replicas=<n>
+
+5. Why is scaling a Deployment easier than manually creating additional Pods?
+- one declarative command adjusts the desired count and the ReplicaSet handles creating/terminating the right number of pods,
+  no manual pod-by-pod creation or deletion, no risk of naming collisions or forgetting to update anything
+
+Part 6
+
+1. What happened when you deleted the Pod?
+- After the pod was deleted within seconds a replacement pod appeared
+
+2. How many Pods did you have after Kubernetes finished creating the replacement?
+- 2
+
+3. Did you manually create the new Pod?
+- no
+
+4. Why did Kubernetes create a replacement Pod?
+- This is because the ReplicaSet's controller loop continuously compares actual vs. desired state and creates new pods to close the gap
+
+5. What Kubernetes concept does this demonstrate?
+- Self-healing / desired-state reconciliation
+
+Part 7
+
+1. What is the desired number of replicas?
+- 2
+2. How many replicas are currently available?
+- 2
+3. What container image is being used?
+- nginx:latest
+4. Which ReplicaSet manages the Pods?
+- web-app-59f86b59ff
+5. What happens when the actual number of Pods is different from the desired number?
+- The Deployment/ReplicaSet controller creates or deletes pods until they match
+
+Part 8
+
+1. What status are the new Pods showing?
+- ErrImagePull or ImagePullBackOff
+
+2. What error can you find in the Pod events?
+- Failed to pull image "nginx:invalid": Error response from daemon
+
+3. Why can't Kubernetes successfully start the container?
+- Docker Hub has no image tagged nginx:invalid, so the container runtime can't pull it, so the container never starts
+
+4. How would you fix the problem?
+- revert the image to a valid tag (nginx:latest) and reapply
