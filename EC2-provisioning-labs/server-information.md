@@ -1,0 +1,66 @@
+# Server Information
+
+## whoami
+
+```bash
+ubuntu
+```
+
+---
+
+## hostname
+
+```bash
+ip-172-31-42-193
+```
+
+---
+
+## pwd
+
+```bash
+/home/ubuntu
+```
+
+---
+
+## uptime
+
+```bash
+ 11:29:39 up 5 min,  1 user,  load average: 0.00, 0.01, 0.00
+```
+
+---
+
+## free -h
+
+```bash
+               total        used        free      shared  buff/cache   available
+Mem:           908Mi       309Mi       383Mi       2.7Mi       324Mi       599Mi
+Swap:             0B          0B          0B
+```
+
+---
+
+## df -h
+
+```bash
+Filesystem       Size  Used Avail Use% Mounted on
+/dev/root        6.7G  2.1G  4.6G  31% /
+tmpfs            455M     0  455M   0% /dev/shm
+tmpfs            182M  888K  181M   1% /run
+efivarfs         128K  3.1K  120K   3% /sys/firmware/efi/efivars
+tmpfs            455M     0  455M   0% /tmp
+none             1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none             1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+/dev/nvme0n1p13  989M   96M  826M  11% /boot
+/dev/nvme0n1p15  105M  6.3M   99M   7% /boot/efi
+none             1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+none             1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+none             1.0M     0  1.0M   0% /run/credentials/serial-getty@ttyS0.service
+tmpfs             91M  8.0K   91M   1% /run/user/1000
+
+```
+
+---
+
