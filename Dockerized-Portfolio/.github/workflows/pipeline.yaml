@@ -1,0 +1,42 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to EC2 via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            # Pull latest code
+            cd /home/ubuntu/dockerized-portfolio-website
+            git pull origin main
+
+            # Stop and remove old container if it exists
+            docker stop portfolio-site || true
+            docker rm portfolio-site || true
+
+            # Build fresh image
+            docker build -t portfolio-site .
+
+            # Run new container
+            docker run -d \
+              --name portfolio-site \
+              --restart unless-stopped \
+              -p 80:80 \
+              portfolio-site
+
+            echo "Deployment complete."

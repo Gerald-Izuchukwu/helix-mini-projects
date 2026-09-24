@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerald Ugwunna | DevOps Engineer</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<nav>
+<div class="logo">Gerald Ugwunna</div>
+
+<ul>
+<li><a href="#about">About</a></li>
+<li><a href="#skills">Skills</a></li>
+<li><a href="#projects">Projects</a></li>
+<li><a href="#experience">Experience</a></li>
+<li><a href="#contact">Contact</a></li>
+<li><a href="#liveshows">Events I have spoken in</a></li> 
+<!-- the above line was added to test cicd -->
+</ul>
+</nav>
+
+<section class="hero">
+<div class="hero-content">
+<h1>Gerald Ugwunna</h1>
+<h2 id="typing"></h2>
+
+<p>
+Junior DevOps Engineer passionate about cloud computing,
+infrastructure automation, CI/CD pipelines, Kubernetes,
+Terraform and AWS. Building scalable systems and automating
+everything possible.
+</p>
+
+<div class="btns">
+<a href="#projects" class="btn primary">View Projects</a>
+<a href="#contact" class="btn secondary">Contact Me</a>
+</div>
+</div>
+</section>
+
+<section id="about">
+<h2 class="section-title">About Me</h2>
+
+<p style="max-width:900px;margin:auto;text-align:center;line-height:2;color:#cbd5e1;">
+I am a DevOps Engineer based in Lagos, Nigeria with experience deploying
+cloud-native applications using AWS, Docker, Kubernetes, Terraform,
+Ansible and GitHub Actions. I enjoy building reliable infrastructure,
+automating deployments and implementing production-grade operational
+practices.
+</p>
+</section>
+
+<section id="skills">
+<h2 class="section-title">Technical Skills</h2>
+
+<div class="skills-grid">
+<div class="skill">☁️ AWS</div>
+<div class="skill">🏗 Terraform</div>
+<div class="skill">⚙️ Ansible</div>
+<div class="skill">🐳 Docker</div>
+<div class="skill">☸ Kubernetes</div>
+<div class="skill">🚀 GitHub Actions</div>
+<div class="skill">🌐 Nginx</div>
+<div class="skill">🐧 Linux</div>
+</div>
+</section>
+
+<section id="projects">
+<h2 class="section-title">Featured Projects</h2>
+
+<div class="projects">
+
+<div class="project-card">
+<div class="project-content">
+<h3>REA (AI Bible App)</h3>
+<p>
+Led infrastructure and deployment operations. Built CI/CD,
+managed PostgreSQL, Dockerized services, implemented secrets
+management and operational best practices.
+</p>
+</div>
+</div>
+
+
+<!-- <div class="project-card">
+<div class="project-content">
+<h3>ClinSight </h3>
+<p>
+Led infrastructure and deployment operations. Built CI/CD,
+managed PostgreSQL, Dockerized services, implemented secrets
+management and operational best practices.
+</p>
+</div>
+</div> -->
+
+<div class="project-card">
+<div class="project-content">
+<h3>Blue Green Observability</h3>
+<p>
+Implemented zero-downtime deployments using Nginx health checks.
+Built Python monitoring service with Slack alerting.
+</p>
+</div>
+</div>
+
+<div class="project-card">
+<div class="project-content">
+<h3>Bash Deploy Automation</h3>
+<p>
+Developed deployment automation scripts for Dockerized applications
+with SSH-based provisioning and Nginx configuration.
+</p>
+</div>
+</div>
+
+<div class="project-card">
+<div class="project-content">
+<h3>Microservices Infra Automation</h3>
+<p>
+Provisioned infrastructure with Terraform, configured servers with
+Ansible and deployed secure microservices behind Traefik.
+</p>
+</div>
+</div>
+
+</div>
+</section>
+
+<section id="experience">
+<h2 class="section-title">Experience</h2>
+
+<div class="timeline">
+
+<div class="timeline-item">
+<div class="timeline-content">
+<h3>Huawei Technologies</h3>
+<p>Pre-Sales Engineer</p>
+<p>2024 - Present</p>
+</div>
+</div>
+
+<div class="timeline-item">
+<div class="timeline-content">
+<h3>Emerj (HNG)</h3>
+<p>DevOps Engineer</p>
+<p>2023 - Present</p>
+</div>
+</div>
+
+</div>
+</section>
+
+<section id="contact" class="contact">
+<h2 class="section-title">Contact</h2>
+
+<p>📍 Lagos, Nigeria</p>
+<p>📞 +234 8134601310</p>
+<p>📧 Your Email Here</p>
+<p>🔗 LinkedIn Profile</p>
+
+</section>
+
+<footer>
+© 2026 Gerald Ugwunna | DevOps Engineer
+</footer>
+
+<script>
+const words = [
+"DevOps Engineer",
+"AWS Enthusiast",
+"Kubernetes Practitioner",
+"Terraform Automation Engineer",
+"Cloud Infrastructure Builder"
+];
+
+let i=0;
+let j=0;
+let current="";
+let isDeleting=false;
+
+function type(){
+
+current=words[i];
+
+if(isDeleting){
+document.getElementById("typing").textContent=
+current.substring(0,j--);
+}else{
+document.getElementById("typing").textContent=
+current.substring(0,j++);
+}
+
+if(!isDeleting && j===current.length+1){
+isDeleting=true;
+setTimeout(type,1200);
+return;
+}
+
+if(isDeleting && j===0){
+isDeleting=false;
+i=(i+1)%words.length;
+}
+
+setTimeout(type,isDeleting?50:100);
+}
+
+type();
+
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+
+for(let i=0;i<100;i++){
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*2+1,
+dx:(Math.random()-0.5),
+dy:(Math.random()-0.5)
+});
+}
+
+function animate(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+particles.forEach(p=>{
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.fillStyle="#00d4ff";
+ctx.fill();
+
+p.x+=p.dx;
+p.y+=p.dy;
+
+if(p.x<0||p.x>canvas.width)p.dx*=-1;
+if(p.y<0||p.y>canvas.height)p.dy*=-1;
+});
+
+requestAnimationFrame(animate);
+}
+
+animate();
+
+window.addEventListener("resize",()=>{
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+});
+</script>
+
+</body>
+</html>
