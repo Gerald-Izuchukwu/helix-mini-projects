@@ -1,0 +1,44 @@
+# Task 1: ping every host in inventory
+ansible all -i inventory -m ping
+
+# Task 2: print date/time on web group using command module
+ansible web -i inventory -m command -a "date"
+
+# Task 3: check free disk space on / for datacenter
+ansible datacenter -i inventory -m shell -a "df -h / | tail -1"
+
+# Task 4: print only ansible_memtotal_mb fact
+ansible all -i inventory -m setup -a "filter=ansible_memtotal_mb"
+
+# Task 5: install htop on datacenter, run 1
+ansible datacenter -i inventory -m package -a "name=htop state=present" --become
+# Task 5: run again - second run reports changed=0 because htop is
+# already installed; the package module checks current state before
+# acting (idempotency) rather than blindly re-running the install
+ansible datacenter -i inventory -m package -a "name=htop state=present" --become
+
+# Task 6: ensure SSH is started and enabled on boot
+ansible all -i inventory -m service -a "name=sshd state=started enabled=yes" --become
+
+# Task 7: create /tmp/hello.txt on web group using content, no source file
+ansible web -i inventory -m copy -a "dest=/tmp/hello.txt content='Hello from Ansible'"
+
+# Task 8: create /tmp/ansible_test directory with 0755 perms
+ansible all -i inventory -m file -a "path=/tmp/ansible_test state=directory mode=0755"
+
+# Task 9: create deployer user on db host only, no login shell
+ansible db -i inventory -m user -a "name=deployer create_home=yes shell=/usr/sbin/nologin" --become --limit <your-db-hostname>
+
+# Task 10: add "# Managed by Ansible" to end of /etc/motd if not present
+ansible all -i inventory -m lineinfile -a "path=/etc/motd line='# Managed by Ansible' insertafter=EOF" --become
+
+# Task 11: ping only hosts whose name starts with "node" using pattern syntax
+ansible 'node*' -i inventory -m ping
+
+# Task 12: run ping with 10 parallel forks
+# forks controls how many hosts Ansible connects to and runs tasks
+# against simultaneously; default is 5. As inventory grows into the
+# hundreds/thousands, a low fork count means Ansible processes hosts
+# in small serial batches, which scales execution time roughly linearly
+# with inventory size instead of running everything in parallel
+ansible all -i inventory -m ping -f 10

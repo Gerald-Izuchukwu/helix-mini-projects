@@ -1,0 +1,17 @@
+1. UNREACHABLE — three root causes + how to check each:
+i. Network/connectivity issue (host down, wrong IP, firewall blocking) → check with ping <ip> or nc -zv <ip> 22
+ii. SSH auth failure (wrong key, wrong user) → try ssh -v <user>@<host> manually to see the auth error
+iii. Wrong ansible_host/inventory variable or DNS not resolving → check ansible-inventory -i inventory --host <name> and getent hosts <hostname>
+
+2. command vs shell module:
+command runs a binary directly without invoking a shell. 
+It is safer (no injection risk from shell metacharacters) but it can't do pipes, redirects, env var expansion, or globbing.
+shell runs through /bin/sh, so a command like df -h / | tail -1 (piping) or ls *.log only works in shell and not command
+
+3. changed vs ok:
+Ansible reports changed when a task actually altered system state, 
+and ok when the system was already in the desired state and nothing happened. 
+This is possible because well-written modules are idempotent, 
+which means that they check current state first 
+(e.g. "is htop already installed?") and only act if there's a gap between current and desired state, 
+rather than blindly executing every time.
